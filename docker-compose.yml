@@ -20,11 +20,19 @@ services:
 
   backend:
     build:
-      context: mybackend
-      dockerfile: ./dockerfile
+      context: backend
+      dockerfile: ./Dockerfile
     depends_on:
       - mongodb
     ports:
-     - 4000:4000
+     - 5000:5000
 
+  client:
+    build:
+      context: client
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+     - 3000:3000
     
