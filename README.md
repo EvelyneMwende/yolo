@@ -1,3 +1,6 @@
+# Link to images on Docker Hub
+- [yolo-client](https://hub.docker.com/repository/docker/evelynemwende/yolo-client)
+- [yolo-backend](https://hub.docker.com/repository/docker/evelynemwende/yolo-backend)
 # Requirements
 Make sure that you have the following installed:
 - [node](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04) 
