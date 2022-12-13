@@ -44,23 +44,41 @@ Make sure that you have the following installed:
 
 ### To use custom docker images, edit your docker-compose.yml to look something like this:
 
-    backend:
-       image: evelynemwende/yolo-backend:v1
-       depends_on:
-         - mongo
-       ports:
-        - 5000:5000
-       ....
+      backend:
+        image: evelynemwende/yolo-backend:v1.0.1
+        build:
+            context: backend
+            dockerfile: ./Dockerfile
+        depends_on:
+            - mongo
+        ports:
+            - 5000:5000
+        environment:
+            - DB_HOST=mongo
+            - DB_USER=admin
+            - DB_PASSWORD=password
+        volumes:
+            - mongo_volume:/data/db
+        networks:
+            - mongo_network
+
+
 
     client:
-      image: evelynemwende/yolo-client:v1
-      ports:
-       - 3000:3000
-      stdin_open: true
-      tty: true
-      depends_on:
-        - backend
-      ....
+        image: evelynemwende/yolo-client:v1.0.1
+        build:
+            context: client
+            dockerfile: ./Dockerfile
+        ports:
+            - 3000:3000
+        stdin_open: true
+        tty: true
+        depends_on:
+            - backend  
+        networks:
+            - mongo_network
+        volumes:
+            - mongo_volume:/data/db
 
 
 
