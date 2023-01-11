@@ -1,0 +1,20 @@
+---
+- name: Build client image
+  docker_image:
+    build: 
+      path: ../roles/client
+      name: yolo_client
+      state: build
+
+- name: Run client container
+  docker_container:
+    name: yolo_client
+    image: yolo_client
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - ../roles/client
+    state: running
+
+- name: Check if container is running
+  shell: docker ps
