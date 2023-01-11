@@ -1,7 +1,13 @@
-# Application servers
-[app]
+[backend]
 192.168.60.4
+
+[client]
 192.168.60.5
+
+# Application servers
+[app:children]
+backend
+client
 
 # Mongodb server
 [db]
