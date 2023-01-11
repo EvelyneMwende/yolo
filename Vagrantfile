@@ -13,6 +13,30 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "geerlingguy/ubuntu2004"
+  config.ssh.insert_key = false
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.provider :virtualbox do |v|
+    v.memory = 512
+    v.linked_clone = true
+  end
+
+  # backend server.
+  config.vm.define "backend" do |app|
+    app.vm.hostname = "orc-app1.test"
+    app.vm.network :private_network, ip: "192.168.60.4"
+  end
+
+  # client server.
+  config.vm.define "client" do |app|
+    app.vm.hostname = "orc-app2.test"
+    app.vm.network :private_network, ip: "192.168.60.5"
+  end
+
+  # mongo db server.
+  config.vm.define "mongo" do |db|
+     db.vm.hostname = "orc-db.test"
+    db.vm.network :private_network, ip: "192.168.60.6"
+  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
