@@ -4,12 +4,14 @@
     name: yolo-client
     image: evelynemwende/yolo-client:v1.0.1
     ports:
-      - "3000:3000"
+      - 3000:3000
+    tty: true
     exposed_ports:
       - 3000
     volumes:
-      - mongo_volume   
+      - mongo_volume:/data/db   
     state: started
+    
   
 - name: Add client to the network
   docker_network:

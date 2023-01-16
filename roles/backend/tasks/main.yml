@@ -1,14 +1,19 @@
 ---
 - name: Run backend container
   vars:
-    backend_image: evelynemwende/yolo-backend:v1.0.1
+    backend_image: evelynemwende/yolo-backend:v1.0.2
   docker_container:
     name: yolo-backend
-    image: evelynemwende/yolo-backend:v1.0.1
+    image: evelynemwende/yolo-backend:v1.0.2
     ports:
       - "5000:5000"
+    env:
+       DB_HOST=mongodatabase
+       DB_USER=admin
+       DB_PASSWORD=password
+      
     volumes:
-      - mongo_volume   
+      - mongo_volume:/data/db   
     state: started
   
 - name: Add backend to the network

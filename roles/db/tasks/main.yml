@@ -1,5 +1,4 @@
 ---
-
 - name: Create volume for shared data
   docker_volume:
     name: mongo_volume
@@ -7,10 +6,13 @@
 
 - name: Run MongoDB container
   docker_container:
-    name: mongo_db
+    name: mongodatabase
     image: mongo
     ports:
-      - "27017:27017"
+      - 27017:27017
+    env:
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: admin
     volumes:
       - mongo_volume:/data/db
     state: started
@@ -22,6 +24,6 @@
   docker_network:
     name: mongo_network
     connected:
-      - mongo_db
+      - mongodatabase
     appends: true
 
