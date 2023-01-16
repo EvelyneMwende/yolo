@@ -11,11 +11,14 @@
     ports:
       - 27017:27017
     env:
-      MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: yolomy
     volumes:
       - mongo_volume:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro 
     state: started
+    restart_policy: always
 
 - name: Check if container is running
   shell: docker ps
