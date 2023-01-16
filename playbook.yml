@@ -12,3 +12,23 @@
   roles:
     - common
 
+- name: Pull mongo image and launch container
+  hosts: all
+  become: true
+  tags: mongo
+  roles:
+    - db
+
+- name: Pull backend image and launch container
+  hosts: all
+  become: true
+  tags: backend
+  roles:
+    - backend
+
+- name: Pull client image and launch container
+  hosts: all
+  become: true
+  tags: client
+  roles:
+    - client

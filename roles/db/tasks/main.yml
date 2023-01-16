@@ -1,4 +1,10 @@
 ---
+
+- name: Create volume for shared data
+  docker_volume:
+    name: mongo_volume
+    state: present
+
 - name: Run MongoDB container
   docker_container:
     name: mongo_db
@@ -7,9 +13,15 @@
       - "27017:27017"
     volumes:
       - mongo_volume:/data/db
-    state: running
+    state: started
 
-- name: Create a volume
-  docker_volume:
-    name: mongo_volume
-    state: present
+- name: Check if container is running
+  shell: docker ps
+
+- name: Add mongo_db container to the network
+  docker_network:
+    name: mongo_network
+    connected:
+      - mongo_db
+    appends: true
+

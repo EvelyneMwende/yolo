@@ -1,20 +1,20 @@
 ---
-- name: Build backend image
-  docker_image:
-    build: 
-      path: ../roles/backend
-      name: yolo_backend
-      state: build
-
 - name: Run backend container
+  vars:
+    backend_image: evelynemwende/yolo-backend:v1.0.1
   docker_container:
-    name: yolo_backend
-    image: yolo_backend
-    ports: 
+    name: yolo-backend
+    image: evelynemwende/yolo-backend:v1.0.1
+    ports:
       - "5000:5000"
-    volumes: 
-      - ../roles/backend
-    state: running
+    volumes:
+      - mongo_volume   
+    state: started
+  
+- name: Add backend to the network
+  docker_network:
+    name: mongo_network
+    connected:
+      - yolo-backend
+    appends: true
 
-- name: Check if container is running
-  shell: docker ps
